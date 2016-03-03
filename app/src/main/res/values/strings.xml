@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">OrderMenu</string>
+    <string name="menu_title_cart">訂單</string>
+</resources>
