@@ -1,14 +1,21 @@
 package tw.com.kaihg.ordermenu;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
+
+import tw.com.kaihg.ordermenu.services.OrderService;
 
 /**
  * Created by huangkaihg on 2016/3/5.
  */
 public class FoodModel implements Serializable {
 
+    @SerializedName("itemTitle")
     private String foodName;
+    @SerializedName("itemPrice")
     private int price;
+    @SerializedName("imageUrl")
     private String imageUrl;
 
     public String getFoodName() {
@@ -28,7 +35,7 @@ public class FoodModel implements Serializable {
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return OrderService.HOST + imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {

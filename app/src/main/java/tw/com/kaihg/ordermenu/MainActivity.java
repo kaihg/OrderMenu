@@ -1,9 +1,8 @@
 package tw.com.kaihg.ordermenu;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -40,22 +39,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        initListView();
-        requestFoods();
+        Fragment fragment = new MainFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_content, fragment).commit();
+
+//        initListView();
+//        requestFoods();
     }
 
     private void requestFoods() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(OrderService.HOST).addConverterFactory(GsonConverterFactory.create()).build();
         OrderService service = retrofit.create(OrderService.class);
-        service.allFoodList().enqueue(new Callback<List<FoodModel>>() {
+        service.allFoodList().enqueue(new Callback<FoodListModel>() {
             @Override
-            public void onResponse(Call<List<FoodModel>> call, Response<List<FoodModel>> response) {
+            public void onResponse(Call<FoodListModel> call, Response<FoodListModel> response) {
                 Log.d("LOG", "onResponse");
-                foodList.addAll(response.body());
+                foodList.addAll(response.body().getFoodModelList());
             }
 
             @Override
-            public void onFailure(Call<List<FoodModel>> call, Throwable t) {
+            public void onFailure(Call<FoodListModel> call, Throwable t) {
                 Log.d("LOG", "onFailure");
                 t.printStackTrace();
             }
@@ -64,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initListView() {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mainActivity_recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        mAdapter = new MainViewAdapter(createFakeList());
-        recyclerView.setAdapter(mAdapter);
+//        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mainActivity_recyclerView);
+//        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+//        mAdapter = new MainViewAdapter(createFakeList());
+//        recyclerView.setAdapter(mAdapter);
     }
 
     private List<FoodModel> createFakeList() {

@@ -2,27 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/foodItem_image"
-        android:src="@drawable/ic_local_grocery_store"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="36dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:lines="2"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:background="#aa000000"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FFF"
         tools:text="I am food"
         android:id="@+id/foodItem_title"
-        android:layout_alignBottom="@+id/foodItem_image"
+        android:layout_below="@+id/foodItem_image"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 </RelativeLayout>
