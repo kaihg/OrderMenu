@@ -1,6 +1,7 @@
 package tw.com.kaihg.ordermenu;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +21,13 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
     private List<FoodModel> modelList;
     private MainViewAdapter.Callback callback;
     private Picasso mPicasso;
+    private Resources mRes;
 
     public MainViewAdapter(List<FoodModel> modelList, Context context, Callback callback) {
         this.modelList = modelList;
         mPicasso = Picasso.with(context);
         this.callback = callback;
+        mRes = context.getResources();
     }
 
     @Override
@@ -40,7 +43,8 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
     @Override
     public void onBindViewHolder(FoodViewHolder holder, int position) {
         holder.titleText.setText(modelList.get(position).getFoodName());
-        mPicasso.load(modelList.get(position).getImageUrl()).into(holder.foodImage);
+        holder.priceText.setText(mRes.getString(R.string.food_price_dollar, modelList.get(position).getPrice()));
+        mPicasso.load(modelList.get(position).getImageUrl()).placeholder(R.drawable.default_food).into(holder.foodImage);
         holder.totalView.setTag(position);
         holder.totalView.setOnClickListener(this);
 
@@ -65,12 +69,14 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
         View totalView;
         ImageView foodImage;
         TextView titleText;
+        TextView priceText;
 
         public FoodViewHolder(View itemView) {
             super(itemView);
             totalView = itemView;
             foodImage = (ImageView) itemView.findViewById(R.id.foodItem_image);
             titleText = (TextView) itemView.findViewById(R.id.foodItem_title);
+            priceText = (TextView) itemView.findViewById(R.id.foodItem_price);
         }
     }
 

@@ -1,12 +1,16 @@
 package tw.com.kaihg.ordermenu.detail;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import tw.com.kaihg.ordermenu.FoodModel;
 import tw.com.kaihg.ordermenu.R;
@@ -20,11 +24,9 @@ import tw.com.kaihg.ordermenu.R;
  * create an instance of this fragment.
  */
 public class FoodDetailFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
-    // TODO: Rename and change types of parameters
     private FoodModel mModel;
 
     private OnFragmentInteractionListener mListener;
@@ -36,7 +38,6 @@ public class FoodDetailFragment extends Fragment {
      * @param model Parameter 1.
      * @return A new instance of fragment FoodDetailFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static FoodDetailFragment newInstance(FoodModel model) {
         FoodDetailFragment fragment = new FoodDetailFragment();
         Bundle args = new Bundle();
@@ -63,7 +64,6 @@ public class FoodDetailFragment extends Fragment {
             }
         }
 
-
     }
 
     @Override
@@ -73,11 +73,20 @@ public class FoodDetailFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_food_detail, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ImageView imageView = (ImageView) view.findViewById(R.id.foodDetail_image);
+        Picasso.with(getContext()).load(mModel.getImageUrl()).placeholder(R.drawable.default_food).into(imageView);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(mModel.getFoodName());
+        ((TextView) view.findViewById(R.id.foodDetail_price)).setText(getString(R.string.food_price, mModel.getPrice()));
+
+        view.findViewById(R.id.foodDetail_addToCart).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.addToCart(mModel);
+            }
+        });
     }
 
     @Override
@@ -89,6 +98,12 @@ public class FoodDetailFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     @Override
@@ -108,8 +123,7 @@ public class FoodDetailFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        public void addToCart(FoodModel foodModel);
     }
 
 }

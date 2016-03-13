@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -43,17 +44,7 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
         super.onCreateView(inflater, container, savedInstanceState);
         View contentView = inflater.inflate(R.layout.fragment_main, container, false);
 
-//        createFakeList();
         return contentView;
-    }
-
-    private List<FoodModel> createFakeList() {
-        for (int i = 0; i < 5; i++) {
-            FoodModel model = new FoodModel();
-            model.setFoodName(String.format("The %d food", i));
-            foodList.add(model);
-        }
-        return foodList;
     }
 
     @Override
@@ -61,6 +52,8 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
         super.onViewCreated(view, savedInstanceState);
         initListView();
         requestFoods();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
+
     }
 
     private void requestFoods() {
@@ -99,9 +92,10 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
     @Override
     public void onItemClick(FoodModel model) {
         Log.d("LOG", "onItemClick " + model.getFoodName());
+        mCallback.openFoodDetail(model);
     }
 
     interface Callback {
-
+        void openFoodDetail(FoodModel foodModel);
     }
 }

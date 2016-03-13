@@ -16,9 +16,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import tw.com.kaihg.ordermenu.detail.FoodDetailFragment;
+import tw.com.kaihg.ordermenu.foodlist.OrdersFragment;
 import tw.com.kaihg.ordermenu.services.OrderService;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainFragment.Callback, FoodDetailFragment.OnFragmentInteractionListener {
 
     private Toolbar mToolBar;
     private MainViewAdapter mAdapter;
@@ -35,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
         mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_action_edit:
+                        openOrderList();
+                        return true;
+                }
                 return false;
             }
         });
@@ -44,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
 
 //        initListView();
 //        requestFoods();
+    }
+
+    private void openOrderList() {
+        OrdersFragment fragment = OrdersFragment.newInstance(null, null);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_content, fragment).addToBackStack(null).commit();
+
     }
 
     private void requestFoods() {
@@ -86,5 +99,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_action_menu,menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void openFoodDetail(FoodModel foodModel) {
+        FoodDetailFragment foodDetailFragment = FoodDetailFragment.newInstance(foodModel);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_content, foodDetailFragment).addToBackStack(null).commit();
+
+    }
+
+    @Override
+    public void addToCart(FoodModel foodModel) {
+
     }
 }

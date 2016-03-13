@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">OrderMenu</string>
+    <string name="app_name">蒸氣點餐</string>
     <string name="menu_title_cart">訂單</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="food_price">價錢：%d</string>
+    <string name="food_price_dollar">$%d</string>
 </resources>
