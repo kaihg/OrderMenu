@@ -26,6 +26,7 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
     public MainViewAdapter(List<FoodModel> modelList, Context context, Callback callback) {
         this.modelList = modelList;
         mPicasso = Picasso.with(context);
+//        new Picasso.Builder(context).memoryCache(new LruCache(24000)).build();
         this.callback = callback;
         mRes = context.getResources();
     }

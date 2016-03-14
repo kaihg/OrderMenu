@@ -3,7 +3,9 @@ package tw.com.kaihg.ordermenu.detail;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +80,10 @@ public class FoodDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ImageView imageView = (ImageView) view.findViewById(R.id.foodDetail_image);
         Picasso.with(getContext()).load(mModel.getImageUrl()).placeholder(R.drawable.default_food).into(imageView);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(mModel.getFoodName());
+        ActionBar bar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        bar.setTitle(mModel.getFoodName());
+        mListener.getToolbar().setNavigationIcon(R.drawable.ic_arrow_back);
+
         ((TextView) view.findViewById(R.id.foodDetail_price)).setText(getString(R.string.food_price, mModel.getPrice()));
 
         view.findViewById(R.id.foodDetail_addToCart).setOnClickListener(new View.OnClickListener() {
@@ -124,6 +129,8 @@ public class FoodDetailFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         public void addToCart(FoodModel foodModel);
+
+        Toolbar getToolbar();
     }
 
 }
