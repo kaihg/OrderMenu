@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,8 +52,15 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
         super.onViewCreated(view, savedInstanceState);
         initListView();
         requestFoods();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ActionBar bar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        bar.setTitle(R.string.app_name);
+        bar.setDisplayHomeAsUpEnabled(false);
     }
 
     private void requestFoods() {
