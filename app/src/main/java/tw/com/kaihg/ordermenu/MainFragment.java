@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,7 +29,6 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
     private Callback mCallback;
     private MainViewAdapter mAdapter;
     private List<FoodModel> foodList = new ArrayList<>();
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -73,12 +72,11 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
                 t.printStackTrace();
             }
         });
-
     }
 
     private void initListView() {
         RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.mainFragment_recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new MainViewAdapter(foodList, getContext(), this);
         recyclerView.setAdapter(mAdapter);
     }
@@ -93,9 +91,11 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
     public void onItemClick(FoodModel model) {
         Log.d("LOG", "onItemClick " + model.getFoodName());
         mCallback.openFoodDetail(model);
+        mCallback.addToCart(model);
     }
 
     interface Callback {
         void openFoodDetail(FoodModel foodModel);
+        void addToCart(FoodModel foodModel);
     }
 }

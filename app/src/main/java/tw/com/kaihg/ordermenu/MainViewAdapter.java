@@ -33,10 +33,8 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
     @Override
     public FoodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(R.layout.adapter_food_item, parent, false);
+        View itemView = inflater.inflate(R.layout.adapter_food_list_item, parent, false);
         FoodViewHolder holder = new FoodViewHolder(itemView);
-
-
         return holder;
     }
 
@@ -47,14 +45,12 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
         mPicasso.load(modelList.get(position).getImageUrl()).placeholder(R.drawable.default_food).into(holder.foodImage);
         holder.totalView.setTag(position);
         holder.totalView.setOnClickListener(this);
-
     }
 
     @Override
     public int getItemCount() {
         return modelList.size();
     }
-
 
     @Override
     public void onClick(View v) {
@@ -65,7 +61,6 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
 
 
     static class FoodViewHolder extends RecyclerView.ViewHolder {
-
         View totalView;
         ImageView foodImage;
         TextView titleText;
@@ -76,6 +71,7 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
             totalView = itemView;
             foodImage = (ImageView) itemView.findViewById(R.id.foodItem_image);
             titleText = (TextView) itemView.findViewById(R.id.foodItem_title);
+            priceText = (TextView) itemView.findViewById(R.id.foodItem_price);
             priceText = (TextView) itemView.findViewById(R.id.foodItem_price);
         }
     }

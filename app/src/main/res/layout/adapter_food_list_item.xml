@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+        android:id="@+id/foodItem_image"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="16dp"
+       />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/foodItem_image"
+            android:id="@+id/linearLayout">
+
+            <TextView
+                android:id="@+id/foodItem_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
+                android:text="第一行文字"
+                android:textColor="#000000"
+                android:textSize="26dp"
+                android:layout_alignLeft="@+id/linearLayout"
+                android:layout_alignStart="@+id/linearLayout"
+                />
+
+            <TextView
+                android:id="@+id/foodItem_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="第二行文字"
+                android:textColor="#000000"
+                android:textSize="23dp"
+                android:layout_centerVertical="true"
+                android:layout_alignLeft="@+id/linearLayout"
+                android:layout_alignStart="@+id/linearLayout" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/foodItem_imageButton"
+        android:src="@drawable/ic_add"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
