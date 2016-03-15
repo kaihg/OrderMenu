@@ -99,7 +99,6 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
     public void onItemClick(FoodModel model) {
         Log.d("LOG", "onItemClick " + model.getFoodName());
         mCallback.openFoodDetail(model);
-        mCallback.addToCart(model);
     }
 
     interface Callback {

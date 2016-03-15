@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,6 +47,7 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
         mPicasso.load(modelList.get(position).getImageUrl()).placeholder(R.drawable.default_food).into(holder.foodImage);
         holder.totalView.setTag(position);
         holder.totalView.setOnClickListener(this);
+        holder.imageButton.setOnClickListener(this);
     }
 
     @Override
@@ -55,25 +57,25 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
 
     @Override
     public void onClick(View v) {
-        FoodModel model = modelList.get((Integer) v.getTag());
-        callback.onItemClick(model);
+        /*FoodModel model = modelList.get((Integer) v.getTag());
+        callback.onItemClick(model);*/
+
+
     }
-
-
 
     static class FoodViewHolder extends RecyclerView.ViewHolder {
         View totalView;
         ImageView foodImage;
         TextView titleText;
         TextView priceText;
-
+        ImageButton imageButton;
         public FoodViewHolder(View itemView) {
             super(itemView);
             totalView = itemView;
             foodImage = (ImageView) itemView.findViewById(R.id.foodItem_image);
             titleText = (TextView) itemView.findViewById(R.id.foodItem_title);
             priceText = (TextView) itemView.findViewById(R.id.foodItem_price);
-            priceText = (TextView) itemView.findViewById(R.id.foodItem_price);
+            imageButton = (ImageButton) itemView.findViewById(R.id.foodItem_imageButton);
         }
     }
 
