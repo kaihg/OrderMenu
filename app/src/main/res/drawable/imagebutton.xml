@@ -1,11 +1,16 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
+    <item android:state_pressed="false">
         <shape android:shape="oval">
-            <size android:width="30dp"
-                android:height="30dp"/>
-            <solid android:color="#33d1fe"/>
-            <item android:state_pressed="true" android:drawable="@android:color/holo_blue_dark"  />
-            <item android:state_enabled="true" android:drawable="@android:color/holo_blue_light"  />
+            <size android:width="40dp"
+                android:height="40dp"/>
+            <solid android:color="#33CCFF"/>
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape android:shape="oval">
+            <size android:width="40dp"
+                android:height="40dp"/>
+            <solid android:color="#0066FF"/>
         </shape>
     </item>
 </selector>
