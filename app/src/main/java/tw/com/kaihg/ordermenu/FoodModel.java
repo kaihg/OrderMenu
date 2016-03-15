@@ -41,4 +41,20 @@ public class FoodModel implements Serializable {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FoodModel foodModel = (FoodModel) o;
+
+        return !(foodName != null ? !foodName.equals(foodModel.foodName) : foodModel.foodName != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return foodName != null ? foodName.hashCode() : 0;
+    }
 }

@@ -21,9 +21,8 @@ public class OrderApplication extends Application {
 
     private void initPicasso() {
         Picasso.Builder builder = new Picasso.Builder(this);
-        builder.downloader(new OkHttpDownloader(this, 1024 * 1024 * 20));
+        builder.downloader(new OkHttpDownloader(this, (long) 1024 * 1024 * 1024 * 20));
         Picasso built = builder.build();
-        built.setIndicatorsEnabled(true);
         built.setLoggingEnabled(true);
         Picasso.setSingletonInstance(built);
     }

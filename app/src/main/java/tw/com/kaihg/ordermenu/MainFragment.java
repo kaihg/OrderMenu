@@ -8,8 +8,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -30,6 +34,8 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
     private Callback mCallback;
     private MainViewAdapter mAdapter;
     private List<FoodModel> foodList = new ArrayList<>();
+    private Toolbar mToolbar;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -38,12 +44,18 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
         }
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View contentView = inflater.inflate(R.layout.fragment_main, container, false);
-
+        mToolbar = mCallback.getToolbar();
         return contentView;
     }
 
@@ -56,11 +68,36 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.main_action_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("LOG", "main onOptionsItemSelected");
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         ActionBar bar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         bar.setTitle(R.string.app_name);
         bar.setDisplayHomeAsUpEnabled(false);
+//        mCallback.getToolbar().setOnMenuItemClickListener(
+//                new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                switch (item.getItemId()){
+//                    case R.id.menu_action_edit:
+//                        return true;
+//                }
+//             return onOptionsItemSelected(item);
+//            }
+//        });
+
     }
 
     private void requestFoods() {
@@ -101,8 +138,16 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
         mCallback.openFoodDetail(model);
     }
 
+    @Override
+    public void addToCart(FoodModel model) {
+        Log.d("LOG", "addToCart " + model.getFoodName());
+        mCallback.addToCart(model);
+    }
+
     interface Callback {
         void openFoodDetail(FoodModel foodModel);
         void addToCart(FoodModel foodModel);
+
+        Toolbar getToolbar();
     }
 }

@@ -1,6 +1,8 @@
 package tw.com.kaihg.ordermenu.foodlist;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -15,8 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private ListAdapter mAdapter;
+    private BaseAdapter mAdapter;
     private List<FoodModel> foodList;
     private ActionBar mToolbar;
 
@@ -86,28 +87,17 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         foodList = OrderManager.getInstance().getOrderList();
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<FoodModel>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, foodList);
+        mAdapter = new OrderAdapter(foodList, getContext());
 
         mToolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         mToolbar.setTitle(getString(R.string.order_page_title, foodList.size()));
-        mListener.getToolbar().setNavigationIcon(R.drawable.ic_arrow_back);
-        mListener.getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Log.d("kaihg", "onMenuItemClick");
-                return false;
-            }
-        });
+
 
         setHasOptionsMenu(true);
-//Toolbar toolbar = new Toolbar(getContext());
-//        toolbar.inflateMenu(R.menu.order_menu);
-//        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
 
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -115,11 +105,19 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
         View view = inflater.inflate(R.layout.fragment_orders, container, false);
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
+
+        TextView priceView = (TextView) view.findViewById(R.id.orderFragment_totalPrice);
+        int price = 0;
+        for (FoodModel model : foodList) {
+            price += model.getPrice();
+        }
+        priceView.setText(getString(R.string.total_order_price, price));
         return view;
+
     }
 
     @Override
@@ -141,15 +139,42 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.order_menu, menu);
-        menu.findItem(R.id.menu_action_edit).setVisible(false);
+//        menu.findItem(R.id.menu_action_edit).setVisible(false);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d("LOG", "onOptionsItemSelected" + item.getItemId());
+        Log.d("LOG", "onOptionsItemSelected" + item.getTitle());
+        switch (item.getItemId()) {
+            case R.id.menu_action_done:
+                onDoneClick();
+                return true;
+            case R.id.menu_action_clear:
+                onClearClick();
+                return true;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onDoneClick() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("送出訂單").setPositiveButton(R.string.action_done, null).show();
+    }
+
+    private void onClearClick() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(R.string.action_clear).setPositiveButton(R.string.action_done, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                OrderManager.getInstance().clearOrders();
+                foodList.clear();
+                mAdapter.notifyDataSetInvalidated();
+            }
+        }).setNegativeButton(R.string.action_cancel, null).show();
     }
 
     @Override
@@ -157,6 +182,9 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
+//            foodList.remove(position);
+//            mAdapter.notifyDataSetChanged();
+//            OrderManager.getInstance().removeItem(foodList.get(position));
         }
     }
 

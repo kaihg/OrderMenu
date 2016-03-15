@@ -9,4 +9,5 @@ public interface ActivityCallback {
     void addToCart(FoodModel model);
 
     Toolbar getToolbar();
+
 }

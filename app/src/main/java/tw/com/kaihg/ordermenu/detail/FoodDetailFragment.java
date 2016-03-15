@@ -82,7 +82,6 @@ public class FoodDetailFragment extends Fragment {
         Picasso.with(getContext()).load(mModel.getImageUrl()).placeholder(R.drawable.default_food).into(imageView);
         ActionBar bar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         bar.setTitle(mModel.getFoodName());
-        mListener.getToolbar().setNavigationIcon(R.drawable.ic_arrow_back);
 
         ((TextView) view.findViewById(R.id.foodDetail_price)).setText(getString(R.string.food_price, mModel.getPrice()));
 

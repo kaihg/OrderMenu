@@ -27,7 +27,6 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
     public MainViewAdapter(List<FoodModel> modelList, Context context, Callback callback) {
         this.modelList = modelList;
         mPicasso = Picasso.with(context);
-//        new Picasso.Builder(context).memoryCache(new LruCache(24000)).build();
         this.callback = callback;
         mRes = context.getResources();
     }
@@ -47,7 +46,8 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
         mPicasso.load(modelList.get(position).getImageUrl()).placeholder(R.drawable.default_food).into(holder.foodImage);
         holder.totalView.setTag(position);
         holder.totalView.setOnClickListener(this);
-        holder.imageButton.setOnClickListener(this);
+        holder.addToCartButton.setTag(position);
+        holder.addToCartButton.setOnClickListener(this);
     }
 
     @Override
@@ -57,10 +57,13 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
 
     @Override
     public void onClick(View v) {
-        /*FoodModel model = modelList.get((Integer) v.getTag());
-        callback.onItemClick(model);*/
+        FoodModel model = modelList.get((Integer) v.getTag());
+        if (v.getId() == R.id.foodItem_addToCartButton) {
+            callback.addToCart(model);
+            return;
+        }
 
-
+        callback.onItemClick(model);
     }
 
     static class FoodViewHolder extends RecyclerView.ViewHolder {
@@ -68,18 +71,21 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
         ImageView foodImage;
         TextView titleText;
         TextView priceText;
-        ImageButton imageButton;
+        ImageButton addToCartButton;
+
         public FoodViewHolder(View itemView) {
             super(itemView);
             totalView = itemView;
             foodImage = (ImageView) itemView.findViewById(R.id.foodItem_image);
             titleText = (TextView) itemView.findViewById(R.id.foodItem_title);
             priceText = (TextView) itemView.findViewById(R.id.foodItem_price);
-            imageButton = (ImageButton) itemView.findViewById(R.id.foodItem_imageButton);
+            addToCartButton = (ImageButton) itemView.findViewById(R.id.foodItem_addToCartButton);
         }
     }
 
     interface Callback {
         void onItemClick(FoodModel model);
+
+        void addToCart(FoodModel model);
     }
 }

@@ -4,7 +4,12 @@
     <string name="menu_title_clear">清除全部</string>
     <string name="menu_title_done">完成</string>
 
+    <string name="action_clear">確定將訂單清除嗎？</string>
+    <string name="action_done">確定</string>
+    <string name="action_cancel">取消</string>
+
     <string name="food_price">價錢：%d</string>
+    <string name="total_order_price">總計：$%d</string>
     <string name="food_price_dollar">$%d</string>
 
     <string name="order_page_title">訂單:%d</string>

@@ -48,6 +48,12 @@ public class OrderManager {
         mPref.edit().putString(SHARED_PREF_ORDER_LIST, mGson.toJson(list)).apply();
     }
 
+    public void removeItem(FoodModel food) {
+        List<FoodModel> list = getOrderList();
+        list.add(food);
+        mPref.edit().putString(SHARED_PREF_ORDER_LIST, mGson.toJson(list)).apply();
+
+    }
     public int getOrdersCount() {
         return getOrderList().size();
     }

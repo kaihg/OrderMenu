@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import tw.com.kaihg.ordermenu.detail.FoodDetailFragment;
 import tw.com.kaihg.ordermenu.foodlist.OrdersFragment;
@@ -25,18 +26,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
         setSupportActionBar(mToolBar);
         mToolBar.inflateMenu(R.menu.main_action_menu);
         mToolBar.setTitle(R.string.app_name);
-        mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_action_edit:
-                        openOrderList();
-                        return true;
-                }
-                return onOptionsItemSelected(item);
-            }
-        });
-
 
         Fragment fragment = new MainFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.main_content, fragment).commit();
@@ -51,11 +40,24 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
             onBackPressed();
             return true;
         }
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.menu_action_edit:
+                openOrderList();
+                return true;
+        }
         Log.d("LOG", "activity " + item.getTitle());
         return false;
     }
 
     private void openOrderList() {
+        if (OrderManager.getInstance().getOrdersCount() == 0) {
+            Toast.makeText(MainActivity.this, "目前沒有訂單", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         OrdersFragment fragment = OrdersFragment.newInstance(null, null);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_content, fragment).addToBackStack(null).commit();
 
