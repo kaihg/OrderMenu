@@ -2,14 +2,14 @@
     <item android:state_pressed="false">
         <shape android:shape="oval">
             <size android:width="40dp"
-                android:height="40dp"/>
+                  android:height="40dp"/>
             <solid android:color="#33CCFF"/>
         </shape>
     </item>
     <item android:state_pressed="true">
         <shape android:shape="oval">
             <size android:width="40dp"
-                android:height="40dp"/>
+                  android:height="40dp"/>
             <solid android:color="#0066FF"/>
         </shape>
     </item>

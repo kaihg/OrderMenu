@@ -50,7 +50,7 @@
         android:layout_alignBottom="@+id/foodItem_image"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:background="@drawable/imagebutton"
+        android:background="@drawable/circle_background"
         android:src="@drawable/ic_add"/>
 
 
