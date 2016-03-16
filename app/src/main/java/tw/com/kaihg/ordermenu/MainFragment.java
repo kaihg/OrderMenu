@@ -35,7 +35,6 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
     private MainViewAdapter mAdapter;
     private List<FoodModel> foodList = new ArrayList<>();
     private Toolbar mToolbar;
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -122,6 +121,7 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
     private void initListView() {
         RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.mainFragment_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL_LIST));
         mAdapter = new MainViewAdapter(foodList, getContext(), this);
         recyclerView.setAdapter(mAdapter);
     }

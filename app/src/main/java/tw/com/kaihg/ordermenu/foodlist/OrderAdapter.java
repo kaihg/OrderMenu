@@ -66,7 +66,6 @@ class OrderAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
-
         View totalView;
         ImageView foodImage;
         TextView titleText;
@@ -79,7 +78,6 @@ class OrderAdapter extends BaseAdapter {
             titleText = (TextView) itemView.findViewById(R.id.foodItem_title);
             priceText = (TextView) itemView.findViewById(R.id.foodItem_price);
             removeButton = itemView.findViewById(R.id.foodItem_removeButton);
-
         }
     }
 

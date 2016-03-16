@@ -3,6 +3,7 @@ package tw.com.kaihg.ordermenu.foodlist;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import tw.com.kaihg.ordermenu.FoodModel;
+import tw.com.kaihg.ordermenu.MainActivity;
 import tw.com.kaihg.ordermenu.R;
 import tw.com.kaihg.ordermenu.manager.OrderManager;
 
@@ -60,7 +62,6 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
     private BaseAdapter mAdapter;
     private List<FoodModel> foodList;
     private ActionBar mToolbar;
-
     // TODO: Rename and change types of parameters
     public static OrdersFragment newInstance(String param1, String param2) {
         OrdersFragment fragment = new OrdersFragment();
@@ -91,11 +92,7 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
 
         mToolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         mToolbar.setTitle(getString(R.string.order_page_title, foodList.size()));
-
-
         setHasOptionsMenu(true);
-
-
     }
 
 
@@ -173,6 +170,9 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
                 OrderManager.getInstance().clearOrders();
                 foodList.clear();
                 mAdapter.notifyDataSetInvalidated();
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         }).setNegativeButton(R.string.action_cancel, null).show();
     }

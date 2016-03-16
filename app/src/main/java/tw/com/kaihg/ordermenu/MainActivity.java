@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
 
         OrdersFragment fragment = OrdersFragment.newInstance(null, null);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_content, fragment).addToBackStack(null).commit();
-
     }
 
     @Override
@@ -73,9 +72,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
     public void openFoodDetail(FoodModel foodModel) {
         FoodDetailFragment foodDetailFragment = FoodDetailFragment.newInstance(foodModel);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_content, foodDetailFragment).addToBackStack(null).commit();
-
     }
-
 
     @Override
     public void addToCart(FoodModel foodModel) {

@@ -4,6 +4,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
     </style>
 
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -11,6 +12,6 @@
         <item name="android:windowNoTitle">true</item>
         <!-- 使用 API Level 22 編譯的話，要拿掉前綴字 -->
         <item name="windowNoTitle">true</item>
-
+        <item name="android:listDivider">@drawable/divider_bg</item>
     </style>
 </resources>

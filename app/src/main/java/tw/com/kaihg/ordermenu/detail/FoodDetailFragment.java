@@ -127,7 +127,7 @@ public class FoodDetailFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        public void addToCart(FoodModel foodModel);
+        void addToCart(FoodModel foodModel);
 
         Toolbar getToolbar();
     }
