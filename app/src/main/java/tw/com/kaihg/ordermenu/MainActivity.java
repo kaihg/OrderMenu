@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
 
     @Override
     public void addToCart(FoodModel foodModel) {
+        Toast.makeText(this, "加入訂單", Toast.LENGTH_SHORT).show();
         OrderManager.getInstance().addToCart(foodModel);
     }
 
