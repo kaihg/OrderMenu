@@ -8,4 +8,13 @@
 
     </style>
 
+    <style name="shadowStyle">
+        <item name="android:elevation">4dp</item>
+
+    </style>
+
+    <style name="shadowButton" parent="shadowStyle">
+        <item name="android:elevation">6dp</item>
+        <item name="android:translationZ">2dp</item>
+    </style>
 </resources>

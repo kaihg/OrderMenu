@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tool="http://schemas.android.com/tools"
                 android:layout_width="wrap_content"
-                android:background="@drawable/shadow_background"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -42,16 +41,19 @@
         tool:text="價錢"
         />
 
-    <ImageButton
+    <TextView
         android:id="@+id/foodItem_addToCartButton"
         android:layout_width="wrap_content"
-        android:layout_margin="4dp"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        style="@style/shadowButton"
+        android:gravity="center"
+        android:text="@string/action_addToCart"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/foodItem_image"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:background="@drawable/circle_background"
-        android:src="@drawable/ic_add"/>
+        />
 
 
 </RelativeLayout>

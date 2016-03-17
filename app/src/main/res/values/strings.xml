@@ -13,4 +13,5 @@
     <string name="food_price_dollar">$%d</string>
 
     <string name="order_page_title">訂單:%d</string>
+    <string name="action_addToCart">加入購物車</string>
 </resources>

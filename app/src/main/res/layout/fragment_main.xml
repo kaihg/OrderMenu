@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
+              xmlns:tools="http://schemas.android.com/tools"
+              tools:context=".MainActivity"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
@@ -8,6 +10,6 @@
         android:layout_width="match_parent"
         android:id="@+id/mainFragment_recyclerView"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
+        tools:listitem="@layout/adapter_food_list_item"
         />
 </LinearLayout>

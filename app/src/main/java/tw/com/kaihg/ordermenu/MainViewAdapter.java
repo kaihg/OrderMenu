@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -71,7 +70,7 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
         ImageView foodImage;
         TextView titleText;
         TextView priceText;
-        ImageButton addToCartButton;
+        View addToCartButton;
 
         public FoodViewHolder(View itemView) {
             super(itemView);
@@ -79,7 +78,7 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
             foodImage = (ImageView) itemView.findViewById(R.id.foodItem_image);
             titleText = (TextView) itemView.findViewById(R.id.foodItem_title);
             priceText = (TextView) itemView.findViewById(R.id.foodItem_price);
-            addToCartButton = (ImageButton) itemView.findViewById(R.id.foodItem_addToCartButton);
+            addToCartButton = itemView.findViewById(R.id.foodItem_addToCartButton);
         }
     }
 

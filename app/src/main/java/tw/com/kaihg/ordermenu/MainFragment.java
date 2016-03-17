@@ -85,17 +85,6 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
         ActionBar bar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         bar.setTitle(R.string.app_name);
         bar.setDisplayHomeAsUpEnabled(false);
-//        mCallback.getToolbar().setOnMenuItemClickListener(
-//                new Toolbar.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                switch (item.getItemId()){
-//                    case R.id.menu_action_edit:
-//                        return true;
-//                }
-//             return onOptionsItemSelected(item);
-//            }
-//        });
 
     }
 

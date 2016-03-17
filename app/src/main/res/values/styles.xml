@@ -14,4 +14,12 @@
         <item name="windowNoTitle">true</item>
         <item name="android:listDivider">@drawable/divider_bg</item>
     </style>
+
+    <style name="shadowStyle">
+        <item name="android:background">@drawable/shadow_background</item>
+    </style>
+
+    <style name="shadowButton" parent="shadowStyle">
+        <item name="android:background">@android:drawable/dialog_holo_light_frame</item>
+    </style>
 </resources>
