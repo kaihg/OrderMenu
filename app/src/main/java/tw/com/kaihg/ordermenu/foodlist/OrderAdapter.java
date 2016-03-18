@@ -18,14 +18,15 @@ import tw.com.kaihg.ordermenu.R;
 /**
  * Created by huangkaihg on 2016/3/15.
  */
-class OrderAdapter extends BaseAdapter {
+class OrderAdapter extends BaseAdapter implements View.OnClickListener{
 
     private List<FoodModel> modelList;
     private Picasso picasso;
-
-    public OrderAdapter(List<FoodModel> modelList, Context context) {
+    private OrderAdapter.Callback callback;
+    public OrderAdapter(List<FoodModel> modelList, Context context, Callback callback) {
         this.modelList = modelList;
         picasso = Picasso.with(context);
+        this.callback = callback;
     }
 
     @Override
@@ -53,16 +54,26 @@ class OrderAdapter extends BaseAdapter {
         }
         holder = (ViewHolder) convertView.getTag();
 
-        bindView(holder, getItem(position));
+        bindView(holder, position);
 
         return convertView;
     }
 
-    private void bindView(ViewHolder holder, FoodModel item) {
-        picasso.load(item.getImageUrl()).placeholder(R.drawable.default_food).into(holder.foodImage);
+    private void bindView(ViewHolder holder, int position) {
+        picasso.load(modelList.get(position).getImageUrl()).placeholder(R.drawable.default_food).into(holder.foodImage);
+        holder.titleText.setText(modelList.get(position).getFoodName());
+        holder.priceText.setText("$" + modelList.get(position).getPrice());
+        holder.removeButton.setTag(position);
+        holder.removeButton.setOnClickListener(this);
+    }
 
-        holder.titleText.setText(item.getFoodName());
-        holder.priceText.setText("$" + item.getPrice());
+    @Override
+    public void onClick(View v) {
+        FoodModel model = modelList.get((Integer) v.getTag());
+        if (v.getId() == R.id.foodItem_removeButton) {
+            callback.removeItem(model);
+            return;
+        }
     }
 
     private class ViewHolder {
@@ -81,4 +92,7 @@ class OrderAdapter extends BaseAdapter {
         }
     }
 
+    interface Callback {
+        void removeItem(FoodModel model);
+    }
 }

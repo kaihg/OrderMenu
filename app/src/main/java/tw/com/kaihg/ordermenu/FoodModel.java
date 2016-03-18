@@ -50,7 +50,6 @@ public class FoodModel implements Serializable {
         FoodModel foodModel = (FoodModel) o;
 
         return !(foodName != null ? !foodName.equals(foodModel.foodName) : foodModel.foodName != null);
-
     }
 
     @Override

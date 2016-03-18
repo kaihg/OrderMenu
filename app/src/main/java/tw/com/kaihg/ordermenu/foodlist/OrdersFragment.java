@@ -3,7 +3,6 @@ package tw.com.kaihg.ordermenu.foodlist;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -24,7 +23,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import tw.com.kaihg.ordermenu.FoodModel;
-import tw.com.kaihg.ordermenu.MainActivity;
 import tw.com.kaihg.ordermenu.R;
 import tw.com.kaihg.ordermenu.manager.OrderManager;
 
@@ -37,7 +35,7 @@ import tw.com.kaihg.ordermenu.manager.OrderManager;
  * Activities containing this fragment MUST implement the {@link Callback}
  * interface.
  */
-public class OrdersFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class OrdersFragment extends Fragment implements AbsListView.OnItemClickListener, OrderAdapter.Callback {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,7 +86,7 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         foodList = OrderManager.getInstance().getOrderList();
-        mAdapter = new OrderAdapter(foodList, getContext());
+        mAdapter = new OrderAdapter(foodList, getContext(),this);
 
         mToolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         mToolbar.setTitle(getString(R.string.order_page_title, foodList.size()));
@@ -170,9 +168,7 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
                 OrderManager.getInstance().clearOrders();
                 foodList.clear();
                 mAdapter.notifyDataSetInvalidated();
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), MainActivity.class);
-                startActivity(intent);
+                getActivity().onBackPressed();
             }
         }).setNegativeButton(R.string.action_cancel, null).show();
     }
@@ -182,9 +178,9 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-//            foodList.remove(position);
-//            mAdapter.notifyDataSetChanged();
-//            OrderManager.getInstance().removeItem(foodList.get(position));
+            //foodList.remove(position);
+            //mAdapter.notifyDataSetInvalidated();
+            //OrderManager.getInstance().removeItem(foodList.get(position));
         }
     }
 
@@ -201,6 +197,17 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
         }
     }
 
+    @Override
+    public void removeItem(FoodModel model) {
+        OrderManager.getInstance().removeItem(model);
+        foodList.remove(model);
+        mAdapter.notifyDataSetInvalidated();
+        if(foodList.size()==0){
+            getActivity().onBackPressed();
+        }
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -213,7 +220,5 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
      */
     public interface Callback {
         Toolbar getToolbar();
-
     }
-
 }

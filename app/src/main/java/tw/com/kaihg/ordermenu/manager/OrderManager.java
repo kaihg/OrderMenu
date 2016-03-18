@@ -17,7 +17,6 @@ public class OrderManager {
     private static final String SHARED_PREF_KEY = "SHARED_PREF_KEY";
     private static final String SHARED_PREF_ORDER_LIST = "SHARED_PREF_ORDER_LIST";
     private static OrderManager mInstance;
-
     private SharedPreferences mPref;
     private Gson mGson;
 
@@ -50,10 +49,10 @@ public class OrderManager {
 
     public void removeItem(FoodModel food) {
         List<FoodModel> list = getOrderList();
-        list.add(food);
+        list.remove(food);
         mPref.edit().putString(SHARED_PREF_ORDER_LIST, mGson.toJson(list)).apply();
-
     }
+
     public int getOrdersCount() {
         return getOrderList().size();
     }

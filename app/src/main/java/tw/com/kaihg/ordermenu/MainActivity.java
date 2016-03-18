@@ -13,10 +13,12 @@ import tw.com.kaihg.ordermenu.detail.FoodDetailFragment;
 import tw.com.kaihg.ordermenu.foodlist.OrdersFragment;
 import tw.com.kaihg.ordermenu.manager.OrderManager;
 
-public class MainActivity extends AppCompatActivity implements MainFragment.Callback, FoodDetailFragment.OnFragmentInteractionListener, OrdersFragment.Callback {
+public class MainActivity extends AppCompatActivity implements MainFragment.Callback, FoodDetailFragment.OnFragmentInteractionListener, OrdersFragment.Callback
+{
 
     private Toolbar mToolBar;
 
+    private MainViewAdapter mainViewAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,17 +59,16 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
             Toast.makeText(MainActivity.this, "目前沒有訂單", Toast.LENGTH_SHORT).show();
             return;
         }
-
         OrdersFragment fragment = OrdersFragment.newInstance(null, null);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_content, fragment).addToBackStack(null).commit();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_action_menu,menu);
+        getMenuInflater().inflate(R.menu.main_action_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
+    
     @Override
     public void openFoodDetail(FoodModel foodModel) {
         FoodDetailFragment foodDetailFragment = FoodDetailFragment.newInstance(foodModel);

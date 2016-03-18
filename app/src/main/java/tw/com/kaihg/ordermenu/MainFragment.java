@@ -70,12 +70,14 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.main_action_menu, menu);
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d("LOG", "main onOptionsItemSelected");
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -98,7 +100,6 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
                 foodList.addAll(response.body().getFoodModelList());
                 mAdapter.notifyDataSetChanged();
             }
-
             @Override
             public void onFailure(Call<FoodListModel> call, Throwable t) {
                 Log.d("LOG", "onFailure");
