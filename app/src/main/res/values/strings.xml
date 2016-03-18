@@ -16,4 +16,11 @@
 
     <string name="order_page_title">訂單:%d</string>
     <string name="action_addToCart">加入購物車</string>
+
+    <string name="side_dish">小菜</string>
+    <string name="main_meal">主餐</string>
+    <string name="drink">飲料</string>
+    <string name="dessert">甜點</string>
+    <string name="meal_package">套餐</string>
+
 </resources>

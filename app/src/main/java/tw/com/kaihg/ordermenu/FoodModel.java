@@ -18,6 +18,9 @@ public class FoodModel implements Serializable {
     @SerializedName("imageUrl")
     private String imageUrl;
 
+    @Enums.MealType
+    private int mealType;
+
     public String getFoodName() {
         return foodName;
     }
@@ -40,6 +43,15 @@ public class FoodModel implements Serializable {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Enums.MealType
+    public int getMealType() {
+        return mealType;
+    }
+
+    public void setMealType(int mealType) {
+        this.mealType = mealType;
     }
 
     @Override

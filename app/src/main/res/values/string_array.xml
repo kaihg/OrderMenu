@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="meal_title">
+        <item>@string/side_dish</item>
+        <item>@string/main_meal</item>
+        <item>@string/drink</item>
+        <item>@string/dessert</item>
+        <item>@string/meal_package</item>
+    </string-array>
+</resources>

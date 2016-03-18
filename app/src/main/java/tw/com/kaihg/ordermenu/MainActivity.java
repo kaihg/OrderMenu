@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import tw.com.kaihg.ordermenu.detail.FoodDetailFragment;
 import tw.com.kaihg.ordermenu.foodlist.OrdersFragment;
+import tw.com.kaihg.ordermenu.main.MealTabFragment;
 import tw.com.kaihg.ordermenu.manager.OrderManager;
 
 public class MainActivity extends AppCompatActivity implements MainFragment.Callback, FoodDetailFragment.OnFragmentInteractionListener, OrdersFragment.Callback {
@@ -27,9 +28,13 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
         mToolBar.inflateMenu(R.menu.main_action_menu);
         mToolBar.setTitle(R.string.app_name);
 
-        Fragment fragment = new MainFragment();
+        Fragment fragment = new MealTabFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.main_content, fragment).commit();
 
+//        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+//        viewPager.setAdapter(new MealFragmentAdapter(getSupportFragmentManager(),this));
+//        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+//        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override

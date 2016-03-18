@@ -3,7 +3,6 @@ package tw.com.kaihg.ordermenu;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +18,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -29,7 +29,7 @@ import tw.com.kaihg.ordermenu.services.OrderService;
 /**
  * Created by huangkaihg on 2016/3/9.
  */
-public class MainFragment extends Fragment implements MainViewAdapter.Callback {
+public class MainFragment extends BaseFragment implements MainViewAdapter.Callback {
 
     private Callback mCallback;
     private MainViewAdapter mAdapter;
@@ -91,27 +91,50 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
     }
 
     private void requestFoods() {
+        if (foodList.size() != 0) {
+            return;
+        }
+
         Retrofit retrofit = new Retrofit.Builder().baseUrl(OrderService.HOST).addConverterFactory(GsonConverterFactory.create()).build();
         OrderService service = retrofit.create(OrderService.class);
         service.allFoodList().enqueue(new retrofit2.Callback<FoodListModel>() {
             @Override
             public void onResponse(Call<FoodListModel> call, Response<FoodListModel> response) {
                 Log.d("LOG", "onResponse " + response.body().getFoodModelList().size());
-                foodList.addAll(response.body().getFoodModelList());
+
+                List<FoodModel> models = response.body().getFoodModelList();
+                addFakeType(models);
+
+                for (FoodModel model :
+                        models) {
+                    if (model.getMealType() == Enums.MEAL_MAIN_MEAL) {
+                        foodList.add(model);
+                    }
+                }
+//                foodList.addAll(models);
                 mAdapter.notifyDataSetChanged();
             }
+
             @Override
             public void onFailure(Call<FoodListModel> call, Throwable t) {
                 Log.d("LOG", "onFailure");
                 t.printStackTrace();
             }
+
+            private void addFakeType(List<FoodModel> models) {
+                Random random = new Random();
+                for (FoodModel model : models) {
+                    model.setMealType(random.nextInt(4));
+                }
+            }
         });
     }
+
 
     private void initListView() {
         RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.mainFragment_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL_LIST));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mAdapter = new MainViewAdapter(foodList, getContext(), this);
         recyclerView.setAdapter(mAdapter);
     }
@@ -132,6 +155,11 @@ public class MainFragment extends Fragment implements MainViewAdapter.Callback {
     public void addToCart(FoodModel model) {
         Log.d("LOG", "addToCart " + model.getFoodName());
         mCallback.addToCart(model);
+    }
+
+    @Override
+    public String getTitle() {
+        return getString(R.string.side_dish);
     }
 
     interface Callback {
