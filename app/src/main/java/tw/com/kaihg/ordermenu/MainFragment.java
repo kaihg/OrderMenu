@@ -35,6 +35,8 @@ public class MainFragment extends BaseFragment implements MainViewAdapter.Callba
     private MainViewAdapter mAdapter;
     private List<FoodModel> foodList = new ArrayList<>();
     private Toolbar mToolbar;
+    private View mProgress;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -55,6 +57,7 @@ public class MainFragment extends BaseFragment implements MainViewAdapter.Callba
         super.onCreateView(inflater, container, savedInstanceState);
         View contentView = inflater.inflate(R.layout.fragment_main, container, false);
         mToolbar = mCallback.getToolbar();
+        mProgress = contentView.findViewById(R.id.progressBar);
         return contentView;
     }
 
@@ -64,6 +67,12 @@ public class MainFragment extends BaseFragment implements MainViewAdapter.Callba
         initListView();
         requestFoods();
 
+    }
+
+    private void showLoading(boolean isShowLoading) {
+        mProgress.setVisibility(isShowLoading ? View.VISIBLE : View.GONE);
+        RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.mainFragment_recyclerView);
+        recyclerView.setVisibility(isShowLoading ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -95,13 +104,15 @@ public class MainFragment extends BaseFragment implements MainViewAdapter.Callba
             return;
         }
 
+        showLoading(true);
+
         Retrofit retrofit = new Retrofit.Builder().baseUrl(OrderService.HOST).addConverterFactory(GsonConverterFactory.create()).build();
         OrderService service = retrofit.create(OrderService.class);
         service.allFoodList().enqueue(new retrofit2.Callback<FoodListModel>() {
             @Override
             public void onResponse(Call<FoodListModel> call, Response<FoodListModel> response) {
                 Log.d("LOG", "onResponse " + response.body().getFoodModelList().size());
-
+                showLoading(false);
                 List<FoodModel> models = response.body().getFoodModelList();
                 addFakeType(models);
 
