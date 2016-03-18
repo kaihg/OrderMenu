@@ -60,9 +60,10 @@ class OrderAdapter extends BaseAdapter implements View.OnClickListener{
     }
 
     private void bindView(ViewHolder holder, int position) {
-        picasso.load(modelList.get(position).getImageUrl()).placeholder(R.drawable.default_food).into(holder.foodImage);
-        holder.titleText.setText(modelList.get(position).getFoodName());
-        holder.priceText.setText("$" + modelList.get(position).getPrice());
+        FoodModel model = modelList.get(position);
+        picasso.load(model.getImageUrl()).placeholder(R.drawable.default_food).into(holder.foodImage);
+        holder.titleText.setText(model.getFoodName());
+        holder.priceText.setText("$" + model.getPrice());
         holder.removeButton.setTag(position);
         holder.removeButton.setOnClickListener(this);
     }

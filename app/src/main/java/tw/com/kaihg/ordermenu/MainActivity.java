@@ -13,12 +13,10 @@ import tw.com.kaihg.ordermenu.detail.FoodDetailFragment;
 import tw.com.kaihg.ordermenu.foodlist.OrdersFragment;
 import tw.com.kaihg.ordermenu.manager.OrderManager;
 
-public class MainActivity extends AppCompatActivity implements MainFragment.Callback, FoodDetailFragment.OnFragmentInteractionListener, OrdersFragment.Callback
-{
+public class MainActivity extends AppCompatActivity implements MainFragment.Callback, FoodDetailFragment.OnFragmentInteractionListener, OrdersFragment.Callback {
 
     private Toolbar mToolBar;
 
-    private MainViewAdapter mainViewAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +30,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
         Fragment fragment = new MainFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.main_content, fragment).commit();
 
-//        initListView();
-//        requestFoods();
     }
 
     @Override

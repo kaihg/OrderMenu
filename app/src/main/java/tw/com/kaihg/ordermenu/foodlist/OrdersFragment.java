@@ -201,7 +201,7 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
     public void removeItem(FoodModel model) {
         OrderManager.getInstance().removeItem(model);
         foodList.remove(model);
-        mAdapter.notifyDataSetInvalidated();
+        mAdapter.notifyDataSetChanged();
         if(foodList.size()==0){
             getActivity().onBackPressed();
         }
