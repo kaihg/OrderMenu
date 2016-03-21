@@ -3,6 +3,7 @@ package tw.com.kaihg.ordermenu.fastmodel;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +31,7 @@ import tw.com.kaihg.ordermenu.Enums;
 import tw.com.kaihg.ordermenu.FoodListModel;
 import tw.com.kaihg.ordermenu.FoodModel;
 import tw.com.kaihg.ordermenu.R;
+import tw.com.kaihg.ordermenu.main.MealTabFragment;
 import tw.com.kaihg.ordermenu.services.OrderService;
 
 /**
@@ -41,7 +43,7 @@ public class FastMainFragment extends BaseFragment implements FastMainViewAdapte
     private FastMainViewAdapter mAdapter;
     private List<FoodModel> foodList = new ArrayList<>();
     private View mProgress;
-
+    private Toolbar mToolbar;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -61,7 +63,7 @@ public class FastMainFragment extends BaseFragment implements FastMainViewAdapte
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View contentView = inflater.inflate(R.layout.fragment_main, container, false);
-
+        mToolbar = mCallback.getToolbar();
         mProgress = contentView.findViewById(R.id.progressBar);
         return contentView;
     }
@@ -83,7 +85,7 @@ public class FastMainFragment extends BaseFragment implements FastMainViewAdapte
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.main_action_menu, menu);
+        inflater.inflate(R.menu.main_fast_action_menu, menu);
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -91,8 +93,18 @@ public class FastMainFragment extends BaseFragment implements FastMainViewAdapte
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d("LOG", "main onOptionsItemSelected");
+        switch (item.getItemId()) {
+            case R.id.common_order:
+                openCommonOrder();//普通點餐
+                return true;
 
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openCommonOrder() {
+        Fragment fragment = new MealTabFragment();
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.main_content, fragment).commit();
     }
 
     @Override
@@ -145,6 +157,8 @@ public class FastMainFragment extends BaseFragment implements FastMainViewAdapte
             }
         });
     }
+
+
 
 
     private void initListView() {

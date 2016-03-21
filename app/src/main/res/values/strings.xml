@@ -3,6 +3,7 @@
     <string name="menu_title_cart">訂單</string>
     <string name="search_title">搜尋</string>
     <string name="fast_order">快速點餐</string>
+    <string name="common_order">普通點餐</string>
     <string name="menu_title_clear">清除全部</string>
     <string name="menu_title_done">完成</string>
 
