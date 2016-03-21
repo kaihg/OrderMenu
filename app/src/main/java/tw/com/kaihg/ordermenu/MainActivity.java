@@ -10,11 +10,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import tw.com.kaihg.ordermenu.detail.FoodDetailFragment;
+import tw.com.kaihg.ordermenu.fastmodel.FastMainFragment;
+import tw.com.kaihg.ordermenu.fastmodel.FastMealTabFragment;
 import tw.com.kaihg.ordermenu.foodlist.OrdersFragment;
 import tw.com.kaihg.ordermenu.main.MealTabFragment;
 import tw.com.kaihg.ordermenu.manager.OrderManager;
 
-public class MainActivity extends AppCompatActivity implements MainFragment.Callback, FoodDetailFragment.OnFragmentInteractionListener, OrdersFragment.Callback {
+public class MainActivity extends AppCompatActivity implements MainFragment.Callback, FastMainFragment.Callback, FoodDetailFragment.OnFragmentInteractionListener, OrdersFragment.Callback {
 
     private Toolbar mToolBar;
 
@@ -24,9 +26,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
         setContentView(R.layout.activity_main);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
 
+        mToolBar.setTitle(R.string.app_name);
         setSupportActionBar(mToolBar);
         mToolBar.inflateMenu(R.menu.main_action_menu);
-        mToolBar.setTitle(R.string.app_name);
 
         Fragment fragment = new MealTabFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.main_content, fragment).commit();
@@ -50,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
             case R.id.menu_action_edit:
                 openOrderList();
                 return true;
+            case R.id.fast_order:
+                openFastOrder();//快速點餐
         }
         Log.d("LOG", "activity " + item.getTitle());
         return false;
@@ -64,12 +68,11 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
         getSupportFragmentManager().beginTransaction().replace(R.id.main_content, fragment).addToBackStack(null).commit();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_action_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+    private void openFastOrder() {
+        Fragment fragment = new FastMealTabFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_content, fragment).commit();
     }
-    
+
     @Override
     public void openFoodDetail(FoodModel foodModel) {
         FoodDetailFragment foodDetailFragment = FoodDetailFragment.newInstance(foodModel);
@@ -83,7 +86,20 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
     }
 
     @Override
+    public void onItemClick_addToCart(FoodModel foodModel) {
+        Toast.makeText(this, "加入訂單", Toast.LENGTH_SHORT).show();
+        OrderManager.getInstance().addToCart(foodModel);
+    }
+
+    @Override
     public Toolbar getToolbar() {
         return mToolBar;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_action_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
 }
