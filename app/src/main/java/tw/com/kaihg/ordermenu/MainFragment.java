@@ -77,10 +77,11 @@ public class MainFragment extends BaseFragment implements MainViewAdapter.Callba
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
         inflater.inflate(R.menu.main_action_menu, menu);
 
-        super.onCreateOptionsMenu(menu, inflater);
+
     }
 
     @Override
@@ -140,7 +141,6 @@ public class MainFragment extends BaseFragment implements MainViewAdapter.Callba
             }
         });
     }
-
 
     private void initListView() {
         RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.mainFragment_recyclerView);

@@ -60,6 +60,8 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
     private BaseAdapter mAdapter;
     private List<FoodModel> foodList;
     private ActionBar mToolbar;
+    private int price=0;
+    private TextView priceView;
     // TODO: Rename and change types of parameters
     public static OrdersFragment newInstance(String param1, String param2) {
         OrdersFragment fragment = new OrdersFragment();
@@ -105,8 +107,7 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
 
-        TextView priceView = (TextView) view.findViewById(R.id.orderFragment_totalPrice);
-        int price = 0;
+        priceView = (TextView) view.findViewById(R.id.orderFragment_totalPrice);
         for (FoodModel model : foodList) {
             price += model.getPrice();
         }
@@ -201,6 +202,8 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
     public void removeItem(FoodModel model) {
         OrderManager.getInstance().removeItem(model);
         foodList.remove(model);
+        price -= model.getPrice();
+        priceView.setText(getString(R.string.total_order_price, price));
         mAdapter.notifyDataSetChanged();
         if(foodList.size()==0){
             getActivity().onBackPressed();
