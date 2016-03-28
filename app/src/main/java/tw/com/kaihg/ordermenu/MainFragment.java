@@ -3,10 +3,12 @@ package tw.com.kaihg.ordermenu;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,19 +31,19 @@ import tw.com.kaihg.ordermenu.services.OrderService;
 /**
  * Created by huangkaihg on 2016/3/9.
  */
-public class MainFragment extends BaseFragment implements MainViewAdapter.Callback {
-
+public class MainFragment extends BaseFragment implements MainViewAdapter.Callback, SearchView.OnQueryTextListener {
+    private RecyclerView recyclerView;
     private Callback mCallback;
     private MainViewAdapter mAdapter;
     private List<FoodModel> foodList = new ArrayList<>();
     private Toolbar mToolbar;
     private View mProgress;
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof Callback) {
             mCallback = (Callback) context;
+
         }
     }
 
@@ -81,13 +83,14 @@ public class MainFragment extends BaseFragment implements MainViewAdapter.Callba
         menu.clear();
         inflater.inflate(R.menu.main_action_menu, menu);
 
-
+        final MenuItem item = menu.findItem(R.id.my_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(this);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d("LOG", "main onOptionsItemSelected");
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -117,12 +120,12 @@ public class MainFragment extends BaseFragment implements MainViewAdapter.Callba
                 List<FoodModel> models = response.body().getFoodModelList();
                 addFakeType(models);
 
-                for (FoodModel model :
-                        models) {
-                    if (model.getMealType() == Enums.MEAL_MAIN_MEAL) {
+                for (FoodModel model : models) {
+                    if (model.getMealType() == Enums.MEAL_SIDE_DISH) {
                         foodList.add(model);
                     }
                 }
+                Log.d("MainFragment", "foodList: " + foodList);
 //                foodList.addAll(models);
                 mAdapter.notifyDataSetChanged();
             }
@@ -143,12 +146,13 @@ public class MainFragment extends BaseFragment implements MainViewAdapter.Callba
     }
 
     private void initListView() {
-        RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.mainFragment_recyclerView);
+        recyclerView = (RecyclerView) getView().findViewById(R.id.mainFragment_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-        mAdapter = new MainViewAdapter(foodList, getContext(), this);
+        mAdapter = new MainViewAdapter(foodList, getActivity(), this);
         recyclerView.setAdapter(mAdapter);
     }
+
 
     @Override
     public void onDetach() {
@@ -158,19 +162,44 @@ public class MainFragment extends BaseFragment implements MainViewAdapter.Callba
 
     @Override
     public void onItemClick(FoodModel model) {
-        Log.d("LOG", "onItemClick " + model.getFoodName());
         mCallback.openFoodDetail(model);
     }
 
     @Override
     public void addToCart(FoodModel model) {
-        Log.d("LOG", "addToCart " + model.getFoodName());
         mCallback.addToCart(model);
     }
 
     @Override
     public String getTitle() {
         return getString(R.string.side_dish);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        final List<FoodModel> filteredModelList = filter(foodList, query);
+        Log.d("MainFragment","filteredModelList: "+filteredModelList);
+        mAdapter.setFilter(filteredModelList);
+        recyclerView.scrollToPosition(0);
+        return true;
+    }
+
+    private List<FoodModel> filter(List<FoodModel> models, String query) {
+        query = query.toLowerCase();
+
+        final List<FoodModel> filteredModelList = new ArrayList<>();
+        for (FoodModel model : models) {
+            final String text = model.getFoodName().toLowerCase();
+            if (text.contains(query)) {
+                filteredModelList.add(model);
+            }
+        }
+        return filteredModelList;
     }
 
     interface Callback {

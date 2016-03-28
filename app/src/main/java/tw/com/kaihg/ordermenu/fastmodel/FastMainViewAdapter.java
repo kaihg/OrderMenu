@@ -58,7 +58,6 @@ public class FastMainViewAdapter extends RecyclerView.Adapter<FastMainViewAdapte
         View totalView;
         TextView titleText;
         TextView priceText;
-        View addToCartButton;
 
         public FoodViewHolder(View itemView) {
             super(itemView);
@@ -68,7 +67,7 @@ public class FastMainViewAdapter extends RecyclerView.Adapter<FastMainViewAdapte
         }
     }
 
-    interface Callback {
+    public interface Callback {
         void onItemClick_addToCart(FoodModel model);
     }
 }

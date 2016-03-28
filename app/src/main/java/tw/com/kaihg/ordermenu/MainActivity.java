@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import tw.com.kaihg.ordermenu.detail.FoodDetailFragment;
 import tw.com.kaihg.ordermenu.fastmodel.FastMainFragment;
-import tw.com.kaihg.ordermenu.fastmodel.FastMealTabFragment;
 import tw.com.kaihg.ordermenu.foodlist.OrdersFragment;
 import tw.com.kaihg.ordermenu.main.MealTabFragment;
 import tw.com.kaihg.ordermenu.manager.OrderManager;
@@ -25,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
-
         mToolBar.setTitle(R.string.app_name);
         setSupportActionBar(mToolBar);
         mToolBar.inflateMenu(R.menu.main_action_menu);
@@ -65,8 +63,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
     }
 
     private void openFastOrder() {
-        Fragment fragment = new FastMealTabFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.main_content, fragment).commit();
+        Fragment fragment = new FastMainFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_content, fragment).commit();
     }
 
     @Override

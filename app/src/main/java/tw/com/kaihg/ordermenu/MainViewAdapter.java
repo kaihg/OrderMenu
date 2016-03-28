@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,9 +83,14 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.FoodVi
         }
     }
 
+    public void setFilter(List<FoodModel> countryModels) {
+        modelList = new ArrayList<>();
+        modelList.addAll(countryModels);
+        notifyDataSetChanged();
+    }
+
     interface Callback {
         void onItemClick(FoodModel model);
-
         void addToCart(FoodModel model);
     }
 }

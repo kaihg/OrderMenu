@@ -12,9 +12,9 @@
         android:background="?attr/colorPrimary"
         android:layout_height="?attr/actionBarSize"
         app:titleTextColor="#FFF"
-        android:layout_width="match_parent" >
-
-    </android.support.v7.widget.Toolbar>
+        android:layout_width="match_parent"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+         />
 
     <FrameLayout
         android:id="@+id/main_content"

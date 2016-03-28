@@ -208,7 +208,6 @@ public class OrdersFragment extends Fragment implements AbsListView.OnItemClickL
         if(foodList.size()==0){
             getActivity().onBackPressed();
         }
-
     }
 
     /**
